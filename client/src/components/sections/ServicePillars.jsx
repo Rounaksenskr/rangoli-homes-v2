@@ -15,7 +15,14 @@ export default function ServicePillars() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {servicePillars.map((pillar) => (
-            <ServiceCard key={pillar.id} service={pillar} />
+            <ServiceCard 
+              key={pillar.id} 
+              title={pillar.title}
+              description={pillar.description}
+              image={pillar.image}
+              link={pillar.path}
+              features={pillar.highlights}
+            />
           ))}
         </div>
       </div>
