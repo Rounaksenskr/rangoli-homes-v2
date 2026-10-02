@@ -5,8 +5,12 @@ import { testimonials } from '../../data/testimonials';
 
 export default function Testimonials() {
   return (
-    <section className="py-16 md:py-24 bg-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden py-16 md:py-24 bg-cream border-t border-border/60">
+      <div 
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.03]"
+        style={{ backgroundImage: `url(https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=1920&q=80)` }}
+      />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           badge="Reviews"
           title="Words From Space Owners"

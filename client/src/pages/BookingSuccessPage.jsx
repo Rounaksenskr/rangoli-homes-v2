@@ -4,8 +4,10 @@ import { CheckCircle2, Calendar, User, Tag, ArrowRight } from 'lucide-react';
 import Button from '../components/ui/Button';
 import { fetchBookingDetails } from '../services/bookingApi';
 import { siteConfig } from '../config/site';
+import useSEO from '../hooks/useSEO';
 
 export default function BookingSuccessPage() {
+  useSEO('Consultation Confirmed', 'Your RangoliHomes consultation has been scheduled successfully.');
   const [searchParams] = useSearchParams();
   const bookingRef = searchParams.get('ref');
   const [details, setDetails] = useState(null);
@@ -21,8 +23,12 @@ export default function BookingSuccessPage() {
   }, [bookingRef]);
 
   return (
-    <div className="min-h-[75vh] flex items-center justify-center py-16 px-4 bg-cream">
-      <div className="max-w-lg w-full bg-surface p-8 sm:p-10 rounded-xl border border-border shadow-md text-center space-y-6">
+    <div className="relative overflow-hidden min-h-[75vh] flex items-center justify-center py-16 px-4 bg-cream">
+      <div 
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.04]"
+        style={{ backgroundImage: `url(https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1920&q=80)` }}
+      />
+      <div className="relative max-w-lg w-full bg-surface p-8 sm:p-10 rounded-xl border border-border shadow-md text-center space-y-6">
         <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center mx-auto text-[#814882]">
           <CheckCircle2 className="w-10 h-10" />
         </div>
@@ -66,10 +72,24 @@ export default function BookingSuccessPage() {
                     })}
                   </span>
                 </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-clay font-medium">Mode:</span>
+                  <span className="font-semibold text-primary">{details.consultationMode || 'Studio Consultation'}</span>
+                </div>
+                {details.dimensionsFile && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-clay font-medium">Floor Plan:</span>
+                    <span className="text-charcoal font-medium">{details.dimensionsFile}</span>
+                  </div>
+                )}
               </>
             )}
-            <div className="pt-2 text-[11px] text-clay leading-relaxed">
-              Studio Address: {typeof siteConfig.address === 'object' ? `${siteConfig.address.street}, ${siteConfig.address.city}` : siteConfig.address}
+            <div className="pt-2 text-[11px] text-clay leading-relaxed border-t border-border/60">
+              {details?.consultationMode === 'Virtual Consultation' ? (
+                <span>Session Type: Virtual Video Meeting. A Google Meet link has been generated and sent to your email.</span>
+              ) : (
+                <span>Studio Address: {typeof siteConfig.address === 'object' ? `${siteConfig.address.street}, ${siteConfig.address.city}` : siteConfig.address}</span>
+              )}
             </div>
           </div>
         )}

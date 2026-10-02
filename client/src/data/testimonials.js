@@ -1,3 +1,8 @@
+/**
+ * Client feedback and project reviews.
+ * NOTE: The reviews below are demo/placeholder testimonials for local demonstration.
+ * Replace with verified client reviews and ratings before production release.
+ */
 export const testimonials = [
   {
     id: 1,

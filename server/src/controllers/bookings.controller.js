@@ -37,6 +37,8 @@ export async function getBookingByRef(req, res, next) {
       data: {
         bookingRef: booking.bookingRef,
         service: booking.service,
+        consultationMode: booking.consultationMode,
+        dimensionsFile: booking.dimensionsFile,
         startsAt: booking.startsAt,
         status: booking.status,
         name: booking.lead.name,

@@ -1,3 +1,8 @@
+/**
+ * Corporate partners and client roster.
+ * NOTE: The client entries below are demo/placeholder commercial partners for localhost demonstration.
+ * Replace with verified enterprise clients prior to production launch.
+ */
 export const clients = [
   { id: 1, name: "Vertex Tech Labs", industry: "Information Technology", logo: "/logos/vertex.svg" },
   { id: 2, name: "Saffron Living", industry: "Hospitality & Real Estate", logo: "/logos/saffron.svg" },

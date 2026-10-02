@@ -3,12 +3,20 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, Sparkles, Clock } from 'lucide-react';
 import Button from '../ui/Button';
 import SafeImage from '../ui/SafeImage';
-import { heroImages } from '../../data/images';
+import { heroImages, pageBackdrops } from '../../data/images';
 
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-cream pt-8 pb-16 md:pt-16 md:pb-24 border-b border-border/60">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Aesthetic Architectural Background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-70"
+        style={{ backgroundImage: `url(${pageBackdrops?.home || heroImages.main})` }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-cream via-cream/85 to-cream/50 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-transparent to-cream pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
@@ -63,6 +71,7 @@ export default function Hero() {
                   src={heroImages.main}
                   alt="Modern warm interior living space by RangoliHomes"
                   className="w-full h-full object-cover"
+                  loading="eager"
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-surface p-4 rounded-lg shadow-xl border border-border hidden sm:block max-w-[210px]">

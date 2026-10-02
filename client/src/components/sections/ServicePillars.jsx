@@ -5,8 +5,12 @@ import { servicePillars } from '../../data/services';
 
 export default function ServicePillars() {
   return (
-    <section className="py-16 md:py-24 bg-surface">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden py-16 md:py-24 bg-surface">
+      <div 
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.03]"
+        style={{ backgroundImage: `url(https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1920&q=80)` }}
+      />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           badge="Disciplines"
           title="End-to-End Interior & Finishing Pillars"

@@ -1,5 +1,4 @@
-import React from 'react';
-// client/src/components/layout/Footer.jsx
+import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
@@ -27,18 +26,111 @@ function LinkedinIcon({ className = "w-5 h-5" }) {
     </svg>
   );
 }
+import { subscribeNewsletter } from '../../services/newsletterApi';
+import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
+
 export default function Footer() {
-  // ... rest of the component remains unchanged
   const currentYear = new Date().getFullYear();
+  const [logoError, setLogoError] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [newsletterMessage, setNewsletterMessage] = useState('');
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    if (!newsletterEmail || !newsletterEmail.includes('@')) {
+      setNewsletterStatus('error');
+      setNewsletterMessage('Please enter a valid email address.');
+      return;
+    }
+
+    setNewsletterStatus('loading');
+    setNewsletterMessage('');
+
+    try {
+      const res = await subscribeNewsletter(newsletterEmail.trim());
+      setNewsletterStatus('success');
+      setNewsletterMessage(res.message || 'Thank you for subscribing to our newsletter!');
+      setNewsletterEmail('');
+    } catch (err) {
+      setNewsletterStatus('error');
+      setNewsletterMessage(err.message || 'Subscription failed. Please try again.');
+    }
+  };
 
   return (
     <footer className="bg-beige border-t border-border text-charcoal">
+      {/* Newsletter Signup Bar */}
+      <div className="border-b border-border/80 bg-surface/60 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="max-w-md text-center md:text-left">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-primary block mb-1">
+              Design Journal & Insights
+            </span>
+            <h3 className="font-serif text-2xl font-bold text-charcoal">
+              Subscribe to Curated Interiors
+            </h3>
+            <p className="text-xs text-clay mt-1">
+              Receive seasonal colour forecasts, renovation guides, and architectural showcases directly in your inbox.
+            </p>
+          </div>
+
+          <div className="w-full md:w-auto min-w-[320px] max-w-md">
+            {newsletterStatus === 'success' ? (
+              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2 text-xs text-emerald-800">
+                <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+                <span>{newsletterMessage}</span>
+              </div>
+            ) : (
+              <form onSubmit={handleNewsletterSubmit} className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="email"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    placeholder="Enter your email address..."
+                    required
+                    disabled={newsletterStatus === 'loading'}
+                    className="flex-1 px-3.5 py-2.5 rounded-lg border border-border bg-surface text-xs text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/40 disabled:opacity-50"
+                  />
+                  <button
+                    type="submit"
+                    disabled={newsletterStatus === 'loading'}
+                    className="px-4 py-2.5 bg-primary hover:bg-primary-hover text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 shrink-0 disabled:opacity-50 cursor-pointer"
+                  >
+                    <span>{newsletterStatus === 'loading' ? 'Joining...' : 'Subscribe'}</span>
+                    <Send className="w-3 h-3" />
+                  </button>
+                </div>
+                {newsletterStatus === 'error' && (
+                  <p className="text-[11px] text-red-600 flex items-center gap-1">
+                    <AlertCircle className="w-3.5 h-3.5" />
+                    <span>{newsletterMessage}</span>
+                  </p>
+                )}
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand & Story */}
           <div className="space-y-4">
-            <Link to="/" className="font-serif text-2xl font-bold tracking-tight">
-              Rangoli<span className="text-primary">Homes</span>
+            <Link to="/" className="flex items-center gap-2 group">
+              {!logoError ? (
+                <img
+                  src="/images/rangoli-homes-logo.png"
+                  alt="RangoliHomes"
+                  className="h-8 md:h-9 w-auto object-contain"
+                  onError={() => setLogoError(true)}
+                />
+              ) : (
+                <span className="font-serif text-2xl font-bold tracking-tight text-charcoal group-hover:text-primary transition-colors">
+                  Rangoli<span className="text-primary">Homes</span>
+                </span>
+              )}
             </Link>
             <p className="text-xs sm:text-sm text-charcoal/70 leading-relaxed">
               Transforming residential and commercial properties into curated, functional sanctuaries. Thoughtful design, transparent delivery.

@@ -24,18 +24,20 @@ model Lead {
 }
 
 model Consultation {
-  id            String   @id @default(uuid())
-  bookingRef    String   @unique
-  leadId        String
-  lead          Lead     @relation(fields: [leadId], references: [id])
-  service       String
-  startsAt      DateTime
-  endsAt        DateTime
-  slotKey       String?  @unique
-  status        String   @default("CONFIRMED")
-  googleEventId String?
-  notes         String?
-  createdAt     DateTime @default(now())
+  id               String   @id @default(uuid())
+  bookingRef       String   @unique
+  leadId           String
+  lead             Lead     @relation(fields: [leadId], references: [id])
+  service          String
+  consultationMode String   @default("Studio Consultation")
+  dimensionsFile   String?
+  startsAt         DateTime
+  endsAt           DateTime
+  slotKey          String?  @unique
+  status           String   @default("CONFIRMED")
+  googleEventId    String?
+  notes            String?
+  createdAt        DateTime @default(now())
 }
 
 model ContactMessage {
@@ -45,5 +47,12 @@ model ContactMessage {
   email     String
   service   String?
   message   String
+  createdAt DateTime @default(now())
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  status    String   @default("SUBSCRIBED")
   createdAt DateTime @default(now())
 }

@@ -147,6 +147,62 @@ export default function InquiryForm({ defaultService = '', onSuccess }) {
         />
       </div>
 
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-semibold text-charcoal">Property Type</label>
+          <select
+            name="propertyType"
+            value={formData.propertyType}
+            onChange={handleChange}
+            className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-cream/30 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/30"
+          >
+            <option value="Residential Apartment">Residential Apartment</option>
+            <option value="Independent House">Independent House</option>
+            <option value="Villa">Villa</option>
+            <option value="Office">Office</option>
+            <option value="Commercial Space">Commercial Space</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-semibold text-charcoal">Estimated Budget</label>
+          <select
+            name="budgetBand"
+            value={formData.budgetBand}
+            onChange={handleChange}
+            className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-cream/30 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/30"
+          >
+            <option value="">Select budget range...</option>
+            <option value="Under ₹5 Lakh">Under ₹5 Lakh</option>
+            <option value="₹5–10 Lakh">₹5–10 Lakh</option>
+            <option value="₹10–20 Lakh">₹10–20 Lakh</option>
+            <option value="₹20–40 Lakh">₹20–40 Lakh</option>
+            <option value="₹40 Lakh+">₹40 Lakh+</option>
+            <option value="Not Sure">Not Sure</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label className="text-xs font-semibold text-charcoal">Preferred Contact Method</label>
+        <div className="flex items-center gap-4 py-1">
+          {['Phone', 'WhatsApp', 'Email'].map((method) => (
+            <label key={method} className="inline-flex items-center gap-2 text-xs text-charcoal cursor-pointer">
+              <input
+                type="radio"
+                name="preferredContact"
+                value={method}
+                checked={formData.preferredContact === method}
+                onChange={handleChange}
+                className="text-primary focus:ring-primary"
+              />
+              <span>{method}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
       <div className="flex flex-col gap-1.5">
         <label className="text-xs font-semibold text-charcoal">Requirement Details</label>
         <textarea

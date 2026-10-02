@@ -14,6 +14,9 @@ const envSchema = z.object({
   SMTP_PASS: z.string().optional().default(''),
   EMAIL_FROM: z.string().default('RangoliHomes <no-reply@rangolihomes.com>'),
   ADMIN_EMAIL: z.string().email().default('admin@rangolihomes.com'),
+  GOOGLE_CLIENT_EMAIL: z.string().optional().default(''),
+  GOOGLE_PRIVATE_KEY: z.string().optional().default(''),
+  GOOGLE_CALENDAR_ID: z.string().optional().default(''),
 });
 
 const parsed = envSchema.safeParse(process.env);

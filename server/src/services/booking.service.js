@@ -13,7 +13,19 @@ function generateBookingRef() {
   return ref;
 }
 
-export async function createBooking({ name, phone, email, service, date, startTime, notes }) {
+import { createCalendarEvent } from '../integrations/googleCalendar.js';
+
+export async function createBooking({
+  name,
+  phone,
+  email,
+  service,
+  date,
+  startTime,
+  notes,
+  consultationMode = 'Studio Consultation',
+  dimensionsFile = null,
+}) {
   const slotKey = `${date}_${startTime}`;
 
   // Calculate start and end UTC timestamps
@@ -64,7 +76,6 @@ export async function createBooking({ name, phone, email, service, date, startTi
     }
 
     // 4. Create unique Consultation
-    // Generate a unique bookingRef avoiding collision
     let consultation = null;
     let attempts = 0;
     while (!consultation && attempts < 5) {
@@ -74,6 +85,8 @@ export async function createBooking({ name, phone, email, service, date, startTi
             bookingRef,
             leadId: finalLead.id,
             service,
+            consultationMode,
+            dimensionsFile: dimensionsFile || null,
             startsAt,
             endsAt,
             slotKey,
@@ -105,6 +118,30 @@ export async function createBooking({ name, phone, email, service, date, startTi
 
   const formattedTime = formatToIST(startsAt);
 
+  // Google Calendar Integration (Non-blocking / dev fallback)
+  createCalendarEvent({
+    bookingRef,
+    name,
+    email,
+    phone,
+    service,
+    consultationMode,
+    startsAt,
+    endsAt,
+    notes,
+  }).then(async (calRes) => {
+    if (calRes?.eventId) {
+      try {
+        await prisma.consultation.update({
+          where: { id: result.consultation.id },
+          data: { googleEventId: calRes.eventId },
+        });
+      } catch (e) {
+        // Non-blocking update failure
+      }
+    }
+  }).catch(() => {});
+
   // Dispatch Admin Notification (Non-blocking)
   sendEmail({
     to: env.ADMIN_EMAIL,
@@ -118,6 +155,8 @@ export async function createBooking({ name, phone, email, service, date, startTi
         Phone: phone,
         Email: email,
         Service: service,
+        'Consultation Mode': consultationMode,
+        'Floor Plan / Dimensions': dimensionsFile || 'None uploaded',
         'Scheduled Time (IST)': formattedTime,
         Notes: notes || 'None',
       },
@@ -126,12 +165,16 @@ export async function createBooking({ name, phone, email, service, date, startTi
 
   // Dispatch Client Confirmation (Non-blocking)
   const escapeHtml = (str) => String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m]);
+  const modeInstructions = consultationMode === 'Virtual Consultation'
+    ? 'A Google Meet link will be emailed to you prior to the session.'
+    : 'We look forward to hosting you at our studio on Design Avenue.';
+
   sendEmail({
     to: email,
     subject: `Consultation Confirmed [${bookingRef}] — RangoliHomes`,
     html: buildCustomerAckTemplate({
       name,
-      message: `Your interior design consultation has been confirmed for <strong>${formattedTime}</strong>.<br/><br/><strong>Booking Reference:</strong> ${bookingRef}<br/><strong>Service:</strong> ${escapeHtml(service)}<br/><br/>Our design director will contact you at your appointed time.`,
+      message: `Your interior design consultation has been confirmed for <strong>${formattedTime}</strong>.<br/><br/><strong>Booking Reference:</strong> ${bookingRef}<br/><strong>Service:</strong> ${escapeHtml(service)}<br/><strong>Mode:</strong> ${escapeHtml(consultationMode)}<br/><br/>${modeInstructions}<br/><br/>Our design director will contact you at your appointed time.`,
     }),
   });
 
@@ -139,6 +182,8 @@ export async function createBooking({ name, phone, email, service, date, startTi
     bookingRef,
     startsAt,
     service,
+    consultationMode,
+    dimensionsFile,
     clientName: name,
   };
 }

@@ -17,6 +17,7 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+      className={`sticky top-0 z-40 w-full relative transition-all duration-300 ${
         isScrolled
           ? 'bg-cream/95 backdrop-blur-md shadow-sm py-3 border-b border-border'
           : 'bg-cream py-5 border-b border-transparent'
@@ -42,9 +43,18 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <span className="font-serif text-2xl font-bold tracking-tight text-charcoal group-hover:text-primary transition-colors">
-            Rangoli<span className="text-primary">Homes</span>
-          </span>
+          {!logoError ? (
+            <img
+              src="/images/rangoli-homes-logo.png"
+              alt="RangoliHomes"
+              className="h-8 md:h-10 w-auto object-contain"
+              onError={() => setLogoError(true)}
+            />
+          ) : (
+            <span className="font-serif text-2xl font-bold tracking-tight text-charcoal group-hover:text-primary transition-colors">
+              Rangoli<span className="text-primary">Homes</span>
+            </span>
+          )}
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -103,12 +113,13 @@ export default function Navbar() {
 
       {/* Mobile Slide-in Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[calc(100%+1px)] bg-cream border-b border-border shadow-xl px-6 py-6 transition-all">
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-cream border-b border-border shadow-xl px-6 py-6 transition-all max-h-[85vh] overflow-y-auto">
           <div className="flex flex-col space-y-4">
             {NAV_LINKS.map((link) => (
               <NavLink
                 key={link.path}
                 to={link.path}
+                onClick={() => setMobileMenuOpen(false)}
                 className={({ isActive }) =>
                   `text-base font-medium py-1 transition-colors ${
                     isActive ? 'text-primary font-semibold' : 'text-charcoal/80 hover:text-primary'
@@ -119,7 +130,7 @@ export default function Navbar() {
               </NavLink>
             ))}
             <div className="pt-4 border-t border-border">
-              <Link to="/book-consultation" className="w-full block">
+              <Link to="/book-consultation" onClick={() => setMobileMenuOpen(false)} className="w-full block">
                 <Button size="md" variant="primary" className="w-full">
                   Book Free Consultation
                 </Button>

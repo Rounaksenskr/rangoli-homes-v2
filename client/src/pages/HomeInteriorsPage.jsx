@@ -5,14 +5,30 @@ import Button from '../components/ui/Button';
 import SafeImage from '../components/ui/SafeImage';
 import { homeServices } from '../data/services';
 import { processSteps } from '../data/process';
-import { heroImages } from '../data/images';
+import { heroImages, pageBackdrops } from '../data/images';
+
+import PricingSection from '../components/sections/PricingSection';
+import useSEO from '../hooks/useSEO';
 
 export default function HomeInteriorsPage() {
+  useSEO(
+    'Residential Home Interiors',
+    'Custom modular kitchens, wardrobe systems, and bespoke interior renovations for apartments and villas in Bengaluru.'
+  );
+
   return (
     <div className="flex flex-col w-full">
       {/* Hero Banner */}
-      <section className="relative bg-cream py-16 md:py-24 border-b border-border/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="relative overflow-hidden bg-cream py-16 md:py-24 border-b border-border/60">
+        {/* Ambient Architectural Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-70"
+          style={{ backgroundImage: `url(${pageBackdrops?.homeInteriors || heroImages.homeInteriors})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-cream via-cream/85 to-cream/50 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-transparent to-cream pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-beige border border-border text-primary text-xs font-semibold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" /> Residential Craftsmanship
@@ -39,6 +55,7 @@ export default function HomeInteriorsPage() {
                 src={heroImages.homeInteriors || heroImages.main}
                 alt="RangoliHomes Luxury Living Room"
                 className="w-full h-full object-cover"
+                loading="eager"
               />
             </div>
           </div>
@@ -80,6 +97,14 @@ export default function HomeInteriorsPage() {
           </div>
         </div>
       </section>
+
+      {/* Pricing Section for Residential */}
+      <PricingSection
+        categoryFilter={['Home Interiors', 'Modular Kitchens']}
+        badge="Residential Cost Estimates"
+        title="Transparent Residential Pricing"
+        subtitle="Upfront cost guidelines for modular woodwork, turnkey home finishing, and custom kitchens."
+      />
 
       {/* Process Section */}
       <section className="py-16 bg-cream border-t border-border/60">

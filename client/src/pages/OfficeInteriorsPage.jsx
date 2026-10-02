@@ -4,14 +4,29 @@ import SectionHeader from '../components/ui/SectionHeader';
 import Button from '../components/ui/Button';
 import SafeImage from '../components/ui/SafeImage';
 import { officeServices } from '../data/services';
-import { heroImages } from '../data/images';
+import { heroImages, pageBackdrops } from '../data/images';
+import PricingSection from '../components/sections/PricingSection';
+import useSEO from '../hooks/useSEO';
 
 export default function OfficeInteriorsPage() {
+  useSEO(
+    'Corporate Office Interiors',
+    'Turnkey corporate fitouts, collaborative workstations, executive boardrooms, and acoustic installations in Bengaluru.'
+  );
+
   return (
     <div className="flex flex-col w-full">
       {/* Hero */}
-      <section className="relative bg-cream py-16 md:py-24 border-b border-border/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="relative overflow-hidden bg-cream py-16 md:py-24 border-b border-border/60">
+        {/* Ambient Architectural Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-70"
+          style={{ backgroundImage: `url(${pageBackdrops?.officeInteriors || heroImages.officeInteriors})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-cream via-cream/85 to-cream/50 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-transparent to-cream pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-beige border border-border text-primary text-xs font-semibold uppercase tracking-wider">
               <Briefcase className="w-3.5 h-3.5" /> Corporate Architecture
@@ -38,6 +53,7 @@ export default function OfficeInteriorsPage() {
                 src={heroImages.officeInteriors || heroImages.main}
                 alt="RangoliHomes Modern Corporate Office"
                 className="w-full h-full object-cover"
+                loading="eager"
               />
             </div>
           </div>
@@ -79,6 +95,14 @@ export default function OfficeInteriorsPage() {
           </div>
         </div>
       </section>
+
+      {/* Commercial Pricing Estimates */}
+      <PricingSection
+        categoryFilter="Office Interiors"
+        badge="Commercial Estimates"
+        title="Commercial Fitout Pricing"
+        subtitle="Indicative turnkey cost brackets per sq.ft. for acoustic partitions, open workstations, and executive cabins."
+      />
 
       {/* Standards */}
       <section className="py-12 bg-beige/40 border-y border-border">

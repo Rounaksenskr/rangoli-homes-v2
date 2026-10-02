@@ -4,11 +4,12 @@ import { logger } from '../utils/logger.js';
 
 let transporter = null;
 
-// Initialize transport (uses ethereal test account fallback if SMTP credentials are empty)
+// Initialize transport (uses ethereal test account fallback in development if SMTP credentials are empty)
 async function getTransporter() {
   if (transporter) return transporter;
 
   if (env.SMTP_USER && env.SMTP_PASS) {
+    logger.info('[Email] Using configured SMTP transport', { host: env.SMTP_HOST, port: env.SMTP_PORT });
     transporter = nodemailer.createTransport({
       host: env.SMTP_HOST,
       port: env.SMTP_PORT,
@@ -18,19 +19,32 @@ async function getTransporter() {
         pass: env.SMTP_PASS,
       },
     });
+  } else if (env.NODE_ENV === 'production') {
+    logger.warn('[Email] SMTP credentials not configured in production mode. Outbound emails will be skipped.');
+    return null;
   } else {
-    // Ethereal mock transport for local sandbox testing
-    const testAccount = await nodemailer.createTestAccount();
-    transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-    });
-    logger.info('Using Ethereal mock mailer', { user: testAccount.user });
+    // Ethereal mock transport for local development sandbox testing
+    try {
+      const testAccount = await nodemailer.createTestAccount();
+      transporter = nodemailer.createTransport({
+        host: 'smtp.ethereal.email',
+        port: 587,
+        secure: false,
+        auth: {
+          user: testAccount.user,
+          pass: testAccount.pass,
+        },
+      });
+      logger.info('[Email] Using Ethereal mock mailer for local development', { user: testAccount.user });
+    } catch (err) {
+      logger.warn('[Email] Failed to initialize Ethereal sandbox, using console fallback', { error: err.message });
+      transporter = {
+        sendMail: async (mailOpts) => {
+          logger.info('[Email Mock Console Dispatch]', { to: mailOpts.to, subject: mailOpts.subject });
+          return { messageId: `mock_${Date.now()}` };
+        }
+      };
+    }
   }
 
   return transporter;
@@ -39,6 +53,11 @@ async function getTransporter() {
 export async function sendEmail({ to, subject, html, replyTo }) {
   try {
     const mailer = await getTransporter();
+    if (!mailer) {
+      logger.warn(`[Email] Skipping email dispatch to ${to} (mailer not configured)`);
+      return { success: false, error: 'Mailer not configured' };
+    }
+
     const info = await mailer.sendMail({
       from: env.EMAIL_FROM,
       to,
@@ -47,8 +66,10 @@ export async function sendEmail({ to, subject, html, replyTo }) {
       replyTo: replyTo || undefined,
     });
 
-    if (info.messageId && nodemailer.getTestMessageUrl(info)) {
-      logger.info(`Preview mail URL: ${nodemailer.getTestMessageUrl(info)}`);
+    if (info?.messageId && nodemailer.getTestMessageUrl?.(info)) {
+      logger.info(`[Email Preview URL]: ${nodemailer.getTestMessageUrl(info)}`);
+    } else {
+      logger.info(`[Email Sent] To: ${to} | Subject: "${subject}"`);
     }
     return { success: true };
   } catch (error) {

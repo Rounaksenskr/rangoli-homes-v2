@@ -12,7 +12,11 @@ export default function FeaturedProjects() {
   const [selectedProject, setSelectedProject] = useState(null);
 
   return (
-    <section className="py-16 md:py-24 bg-cream border-t border-border/60">
+    <section className="relative overflow-hidden py-16 md:py-24 bg-cream border-t border-border/60">
+      <div 
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.03]"
+        style={{ backgroundImage: `url(https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80)` }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           badge="Portfolio"

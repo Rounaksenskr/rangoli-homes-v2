@@ -7,6 +7,13 @@ import { siteConfig } from '../../config/site';
 export default function CTASection() {
   return (
     <section className="py-16 md:py-20 bg-charcoal text-cream relative overflow-hidden">
+      {/* Ambient Dark Architectural Backdrop */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-15 pointer-events-none"
+        style={{ backgroundImage: `url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80)` }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-charcoal/85 via-charcoal/90 to-charcoal pointer-events-none" />
+
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
         <span className="text-xs font-semibold uppercase tracking-widest text-primary-light">Ready To Begin?</span>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold leading-tight">

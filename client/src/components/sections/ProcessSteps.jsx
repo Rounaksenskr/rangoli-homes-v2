@@ -4,8 +4,12 @@ import { processSteps } from '../../data/process';
 
 export default function ProcessSteps() {
   return (
-    <section className="py-16 md:py-24 bg-cream border-t border-border/60">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden py-16 md:py-24 bg-cream border-t border-border/60">
+      <div 
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.03]"
+        style={{ backgroundImage: `url(https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1920&q=80)` }}
+      />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           badge="Execution"
           title="How Your Journey Unfolds"

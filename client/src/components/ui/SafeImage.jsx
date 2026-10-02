@@ -6,6 +6,7 @@ export default function SafeImage({
   alt = '',
   className = '',
   fallbackSrc,
+  loading = 'lazy',
   ...props
 }) {
   const [error, setError] = useState(false);
@@ -18,6 +19,7 @@ export default function SafeImage({
           alt={alt}
           className={className}
           onError={() => setError(true)}
+          loading={loading}
           {...props}
         />
       );
@@ -40,7 +42,7 @@ export default function SafeImage({
       alt={alt}
       className={className}
       onError={() => setError(true)}
-      loading="lazy"
+      loading={loading}
       {...props}
     />
   );

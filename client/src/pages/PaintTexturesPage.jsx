@@ -5,11 +5,18 @@ import SectionHeader from '../components/ui/SectionHeader';
 import Button from '../components/ui/Button';
 import SafeImage from '../components/ui/SafeImage';
 import { paintServices } from '../data/services';
-import { heroImages } from '../data/images';
+import { heroImages, pageBackdrops } from '../data/images';
+import PricingSection from '../components/sections/PricingSection';
+import useSEO from '../hooks/useSEO';
 
 const filterCategories = ['All', 'Interior', 'Exterior', 'Texture', 'Waterproofing'];
 
 export default function PaintTexturesPage() {
+  useSEO(
+    'Paint & Architectural Wall Textures',
+    'Specialized luxury paint finishes, Italian stuccos, exterior weather shields, and certified waterproofing in Bengaluru.'
+  );
+
   const [selectedFilter, setSelectedFilter] = useState('All');
 
   const filteredItems = selectedFilter === 'All'
@@ -19,8 +26,16 @@ export default function PaintTexturesPage() {
   return (
     <div className="flex flex-col w-full">
       {/* Hero */}
-      <section className="relative bg-cream py-16 md:py-24 border-b border-border/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="relative overflow-hidden bg-cream py-16 md:py-24 border-b border-border/60">
+        {/* Ambient Architectural Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-70"
+          style={{ backgroundImage: `url(${pageBackdrops?.paintTextures || heroImages.paintTextures})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-cream via-cream/85 to-cream/50 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-transparent to-cream pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-beige border border-border text-primary text-xs font-semibold uppercase tracking-wider">
               <Paintbrush className="w-3.5 h-3.5" /> Architectural Finishes
@@ -47,6 +62,7 @@ export default function PaintTexturesPage() {
                 src={heroImages.paintTextures || heroImages.main}
                 alt="RangoliHomes Textured Wall Finish"
                 className="w-full h-full object-cover"
+                loading="eager"
               />
             </div>
           </div>
@@ -112,6 +128,14 @@ export default function PaintTexturesPage() {
           </div>
         </div>
       </section>
+
+      {/* Pricing Section for Paints and Finishes */}
+      <PricingSection
+        categoryFilter={['Paint Services', 'Wall Textures', 'Waterproofing']}
+        badge="Finishes & Waterproofing"
+        title="Paint & Texture Cost Estimator"
+        subtitle="Transparent per-square-foot baseline rates for standard painting, specialty designer finishes, and waterproofing."
+      />
 
       {/* Surface Guarantee Banner */}
       <section className="py-12 bg-charcoal text-cream text-center">

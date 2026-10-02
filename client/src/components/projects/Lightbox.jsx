@@ -61,16 +61,23 @@ export default function Lightbox({ project, onClose }) {
             {project.description}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-border/60">
             <div className="flex items-center gap-2">
               <Tag className="w-4 h-4 text-primary" />
               <span className="text-xs text-clay">Style: Modern Warm Minimalist</span>
             </div>
-            <Link to="/book-consultation" onClick={onClose}>
-              <Button variant="primary" size="md">
-                Plan Similar Space
-              </Button>
-            </Link>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link to={`/projects/${project.id}`} onClick={onClose}>
+                <Button variant="outline" size="sm">
+                  View Full Project
+                </Button>
+              </Link>
+              <Link to={`/book-consultation?service=${encodeURIComponent(project.category)}`} onClick={onClose}>
+                <Button variant="primary" size="sm">
+                  Plan Similar Space
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
