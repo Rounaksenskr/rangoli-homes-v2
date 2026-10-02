@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle2, Shield, Clock, Users, Palette, Headset } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
-import { whyChooseUs } from '../../data/whyChoose';
+import { whyChooseReasons } from '../../data/whyChoose';
 
 const iconMap = {
   designers: Users,
@@ -23,17 +23,17 @@ export default function WhyChoose() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {whyChooseUs.map((item) => {
+          {whyChooseReasons.map((item) => {
             const Icon = iconMap[item.icon] || CheckCircle2;
             return (
               <div 
                 key={item.id} 
-                className="p-6 rounded-lg bg-cream/50 border border-border hover:border-terracotta/40 transition-colors"
+                className="p-6 rounded-lg bg-cream/50 border border-border hover:border-primary/40 transition-colors"
               >
-                <div className="w-10 h-10 rounded-md bg-beige flex items-center justify-center text-terracotta mb-4">
+                <div className="w-10 h-10 rounded-md bg-beige flex items-center justify-center text-primary mb-4">
                   <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="font-serif text-lg font-bold text-deep-brown mb-2">{item.title}</h3>
+                <h3 className="font-serif text-lg font-bold text-charcoal mb-2">{item.title}</h3>
                 <p className="text-clay text-sm leading-relaxed">{item.description}</p>
               </div>
             );

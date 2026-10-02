@@ -42,8 +42,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2 group">
-          <span className="font-serif text-2xl font-bold tracking-tight text-deep-brown group-hover:text-terracotta transition-colors">
-            Rangoli<span className="text-terracotta">Homes</span>
+          <span className="font-serif text-2xl font-bold tracking-tight text-charcoal group-hover:text-primary transition-colors">
+            Rangoli<span className="text-primary">Homes</span>
           </span>
         </Link>
 
@@ -56,8 +56,8 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `text-sm tracking-wide font-medium transition-colors relative py-1 ${
                   isActive
-                    ? 'text-terracotta'
-                    : 'text-deep-brown/80 hover:text-terracotta'
+                    ? 'text-primary'
+                    : 'text-charcoal/80 hover:text-primary'
                 }`
               }
             >
@@ -65,7 +65,7 @@ export default function Navbar() {
                 <>
                   {link.name}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-terracotta rounded-full" />
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full" />
                   )}
                 </>
               )}
@@ -92,7 +92,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-deep-brown hover:text-terracotta focus:outline-none"
+            className="p-2 text-charcoal hover:text-primary focus:outline-none"
             aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -111,7 +111,7 @@ export default function Navbar() {
                 to={link.path}
                 className={({ isActive }) =>
                   `text-base font-medium py-1 transition-colors ${
-                    isActive ? 'text-terracotta font-semibold' : 'text-deep-brown/80 hover:text-terracotta'
+                    isActive ? 'text-primary font-semibold' : 'text-charcoal/80 hover:text-primary'
                   }`
                 }
               >

@@ -6,9 +6,9 @@ import { siteConfig } from '../../config/site';
 
 export default function CTASection() {
   return (
-    <section className="py-16 md:py-20 bg-deep-brown text-cream relative overflow-hidden">
+    <section className="py-16 md:py-20 bg-charcoal text-cream relative overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
-        <span className="text-xs font-semibold uppercase tracking-widest text-terracotta">Ready To Begin?</span>
+        <span className="text-xs font-semibold uppercase tracking-widest text-primary">Ready To Begin?</span>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold leading-tight">
           Bring Clarity and Elegance to Your Next Interior Project.
         </h2>
@@ -17,7 +17,7 @@ export default function CTASection() {
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
           <Link to="/book-consultation" className="w-full sm:w-auto">
-            <Button variant="primary" size="lg" className="w-full sm:w-auto bg-terracotta text-white hover:bg-terracotta/90 border-transparent">
+            <Button variant="primary" size="lg" className="w-full sm:w-auto bg-primary text-white hover:bg-primary/90 border-transparent">
               <Calendar className="w-4 h-4 mr-1" />
               Book Free Consultation
             </Button>

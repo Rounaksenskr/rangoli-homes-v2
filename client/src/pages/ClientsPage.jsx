@@ -1,10 +1,36 @@
-import React from 'react';
+import SectionHeader from '../components/ui/SectionHeader';
+import SafeImage from '../components/ui/SafeImage';
+import { clients } from '../data/clients';
 
 export default function ClientsPage() {
   return (
-    <div className="py-20 text-center">
-      <h1 className="text-3xl font-serif font-bold text-deep-brown">Our Clients</h1>
-      <p className="text-clay mt-2">Trusted partners and corporate spaces we've transformed.</p>
+    <div className="py-16 md:py-24 bg-cream min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeader
+          badge="Partners"
+          title="Client Roster & Commercial Partners"
+          subtitle="A selection of businesses, property developers, and residential societies that trust our execution quality."
+        />
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          {clients.map((client) => (
+            <div
+              key={client.id}
+              className="bg-surface p-8 rounded-xl border border-border flex flex-col items-center justify-center text-center hover:border-primary/40 transition-colors"
+            >
+              <div className="h-12 w-auto flex items-center justify-center mb-4">
+                <SafeImage
+                  src={client.logo}
+                  alt={client.name}
+                  className="max-h-12 max-w-[120px] object-contain grayscale hover:grayscale-0 transition-all"
+                />
+              </div>
+              <h3 className="font-serif font-bold text-charcoal text-sm">{client.name}</h3>
+              <p className="text-clay text-xs mt-1">{client.industry || 'Client Space'}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

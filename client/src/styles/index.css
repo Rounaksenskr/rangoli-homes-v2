@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --color-cream: #FBF7F1;
+  --color-cream: #F8F8F8;
   --color-surface: #FFFFFF;
-  --color-beige: #F3EBDF;
-  --color-charcoal: #2B2623;
-  --color-clay: #8A6F5A;
-  --color-terracotta: #B4562F;
-  --color-border: #E6DCCD;
+  --color-beige: #ECECEC;
+  --color-charcoal: #212529;
+  --color-clay: #4C4C4C;
+  --color-primary: #814882;
+  --color-border: #DFDFDF;
 }
 
 @layer base {
@@ -40,13 +40,13 @@
     height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #F3EBDF;
+    background: #ECECEC;
   }
   ::-webkit-scrollbar-thumb {
-    background: #8A6F5A;
+    background: #4C4C4C;
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #B4562F;
+    background: #814882;
   }
 }

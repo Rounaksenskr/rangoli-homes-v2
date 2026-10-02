@@ -1,6 +1,6 @@
 import React from 'react';
 import SectionHeader from '../ui/SectionHeader';
-import { homeProcess } from '../../data/process';
+import { processSteps } from '../../data/process';
 
 export default function ProcessSteps() {
   return (
@@ -13,10 +13,10 @@ export default function ProcessSteps() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative">
-          {homeProcess.map((step, idx) => (
+          {processSteps.map((step, idx) => (
             <div key={step.id || idx} className="relative bg-surface p-6 rounded-lg border border-border text-center md:text-left">
-              <span className="text-xs font-bold text-terracotta tracking-wider uppercase">Step 0{idx + 1}</span>
-              <h3 className="font-serif text-base font-bold text-deep-brown mt-2 mb-2">{step.title}</h3>
+              <span className="text-xs font-bold text-primary tracking-wider uppercase">Step 0{idx + 1}</span>
+              <h3 className="font-serif text-base font-bold text-charcoal mt-2 mb-2">{step.title}</h3>
               <p className="text-clay text-xs leading-relaxed">{step.description}</p>
             </div>
           ))}

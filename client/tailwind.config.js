@@ -7,17 +7,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        cream: "#FBF7F1",
+        cream: "#F8F8F8",
         surface: "#FFFFFF",
-        beige: "#F3EBDF",
-        charcoal: "#2B2623",
-        clay: "#8A6F5A",
-        terracotta: {
-          DEFAULT: "#B4562F",
-          hover: "#9C4724",
-          light: "#F7ECE6",
+        beige: "#ECECEC",
+        charcoal: "#212529",
+        clay: "#4C4C4C",
+        primary: {
+          DEFAULT: "#814882",
+          hover: "#6A3A6B",
+          light: "#F2EAF2",
         },
-        borderBase: "#E6DCCD",
+        borderBase: "#DFDFDF",
       },
       fontFamily: {
         serif: ["'Cormorant Garamond'", "Georgia", "serif"],

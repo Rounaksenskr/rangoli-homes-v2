@@ -6,7 +6,7 @@ import MobileStickyCTA from './MobileStickyCTA';
 
 export default function MainLayout({ children }) {
   return (
-    <div className="min-h-screen flex flex-col bg-cream text-deep-brown font-sans selection:bg-terracotta selection:text-white pb-14 sm:pb-0">
+    <div className="min-h-screen flex flex-col bg-cream text-charcoal font-sans selection:bg-primary selection:text-white pb-14 sm:pb-0">
       <Navbar />
       <main className="flex-grow">{children}</main>
       <Footer />

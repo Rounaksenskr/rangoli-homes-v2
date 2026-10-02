@@ -1,9 +1,11 @@
 import React from 'react';
+// client/src/components/layout/WhatsAppButton.jsx
 import { useLocation } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
-import siteConfig from '../../config/site';
+import { siteConfig } from '../../config/site'; // <-- Change to curly braces
 
 export default function WhatsAppButton() {
+  // ...
   const location = useLocation();
 
   // Suppress button on booking workflow to eliminate distraction
