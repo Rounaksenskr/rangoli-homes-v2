@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { submitLead } from '../../services/leadsApi';
 
 export default function InquiryForm({ defaultService = '', onSuccess }) {
   const [formData, setFormData] = useState({
@@ -14,10 +15,10 @@ export default function InquiryForm({ defaultService = '', onSuccess }) {
     propertyType: 'Residential Apartment',
     budgetBand: '',
     preferredContact: 'Phone',
-    hp_token: '', // Honeypot field for spam prevention
+    hp_token: '',
   });
 
-  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
+  const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
@@ -28,13 +29,11 @@ export default function InquiryForm({ defaultService = '', onSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Reject honeypot submissions quietly
     if (formData.hp_token) {
       setStatus('success');
       return;
     }
 
-    // Phone format check: standard 10-digit Indian mobile format
     const phoneClean = formData.phone.replace(/[\s-]/g, '');
     const phoneRegex = /^(?:\+91)?[6-9]\d{9}$/;
     if (!phoneRegex.test(phoneClean)) {
@@ -47,13 +46,15 @@ export default function InquiryForm({ defaultService = '', onSuccess }) {
     setErrorMessage('');
 
     try {
-      // Connects with Phase 7 Express endpoints; simulates network response for Phase 5
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      await submitLead({
+        ...formData,
+        phone: phoneClean,
+      });
       setStatus('success');
       if (onSuccess) onSuccess();
-    } catch {
+    } catch (err) {
       setStatus('error');
-      setErrorMessage('Unable to process your request. Please try again.');
+      setErrorMessage(err.message || 'Unable to process your request. Please try again.');
     }
   };
 
@@ -71,7 +72,6 @@ export default function InquiryForm({ defaultService = '', onSuccess }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Honeypot Field */}
       <input
         type="text"
         name="hp_token"
@@ -143,7 +143,7 @@ export default function InquiryForm({ defaultService = '', onSuccess }) {
           name="city"
           value={formData.city}
           onChange={handleChange}
-          placeholder="e.g. Kolkata / Durgapur"
+          placeholder="e.g. Bengaluru"
         />
       </div>
 
