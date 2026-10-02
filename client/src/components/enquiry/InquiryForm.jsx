@@ -131,9 +131,9 @@ export default function InquiryForm({ defaultService = '', onSuccess }) {
           >
             <option value="Home Interiors">Home Interiors</option>
             <option value="Office Interiors">Office Interiors</option>
-            <option value="Paint Services">Paint Services</option>
-            <option value="Wall Textures">Wall Textures</option>
+            <option value="Paint & Textures">Paint & Textures</option>
             <option value="Waterproofing">Waterproofing</option>
+            <option value="Complete Overhaul">Complete Overhaul / Architecture</option>
             <option value="Other">Other</option>
           </select>
         </div>

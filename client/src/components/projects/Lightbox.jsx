@@ -1,15 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { X, MapPin, Tag } from 'lucide-react';
 import SafeImage from '../ui/SafeImage';
 import Button from '../ui/Button';
 import { Link } from 'react-router-dom';
 
 export default function Lightbox({ project, onClose }) {
+  const lightboxRef = useRef(null);
+
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === 'Escape') onClose();
     }
     window.addEventListener('keydown', handleKeyDown);
+    setTimeout(() => lightboxRef.current?.focus(), 10);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
@@ -17,7 +20,7 @@ export default function Lightbox({ project, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal/80 backdrop-blur-sm animate-fade-in">
-      <div className="relative bg-surface rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-border shadow-2xl p-6 sm:p-8">
+      <div ref={lightboxRef} tabIndex={-1} className="relative bg-surface rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-border shadow-2xl p-6 sm:p-8 outline-none">
         {/* Close Button */}
         <button
           onClick={onClose}

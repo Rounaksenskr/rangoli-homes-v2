@@ -58,27 +58,39 @@ export async function sendEmail({ to, subject, html, replyTo }) {
   }
 }
 
+function escapeHtml(unsafe) {
+  if (typeof unsafe !== 'string') return unsafe;
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 export function buildAdminAlertTemplate({ title, data }) {
   const rows = Object.entries(data)
     .filter(([_, v]) => Boolean(v))
     .map(
-      ([k, v]) => `<tr><td style="padding:6px 12px;font-weight:bold;color:#4C4C4C;">${k}</td><td style="padding:6px 12px;">${v}</td></tr>`
+      ([k, v]) => `<tr><td style="padding:6px 12px;font-weight:bold;color:#4C4C4C;">${escapeHtml(k)}</td><td style="padding:6px 12px;">${escapeHtml(String(v))}</td></tr>`
     )
     .join('');
 
   return `
     <div style="font-family:sans-serif;max-width:600px;margin:auto;border:1px solid #DFDFDF;padding:24px;border-radius:8px;">
-      <h2 style="color:#212529;margin-top:0;">${title}</h2>
+      <h2 style="color:#212529;margin-top:0;">${escapeHtml(title)}</h2>
       <table style="width:100%;border-collapse:collapse;">${rows}</table>
     </div>
   `;
 }
 
 export function buildCustomerAckTemplate({ name, message }) {
+  // message might contain intentional HTML from our own code (e.g., <br/>, <strong>)
+  // so we only escape the name. The message is assembled by the server, not directly from user input.
   return `
     <div style="font-family:sans-serif;max-width:600px;margin:auto;border:1px solid #DFDFDF;padding:24px;border-radius:8px;">
       <h2 style="color:#814882;margin-top:0;">RangoliHomes</h2>
-      <p>Hello ${name},</p>
+      <p>Hello ${escapeHtml(name)},</p>
       <p>${message}</p>
       <p style="margin-top:24px;color:#4C4C4C;font-size:12px;">RangoliHomes Design Studio &bull; Bengaluru, India</p>
     </div>

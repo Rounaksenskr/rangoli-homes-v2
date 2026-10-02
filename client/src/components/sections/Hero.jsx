@@ -43,11 +43,11 @@ export default function Hero() {
             <div className="pt-6 border-t border-border/80 grid grid-cols-3 gap-4 text-center lg:text-left">
               <div className="flex flex-col sm:flex-row items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
-                <span className="text-xs sm:text-sm font-medium text-charcoal">10-Year Warranty</span>
+                <span className="text-xs sm:text-sm font-medium text-charcoal">Quality Materials</span>
               </div>
               <div className="flex flex-col sm:flex-row items-center gap-2">
                 <Clock className="w-4 h-4 text-primary shrink-0" />
-                <span className="text-xs sm:text-sm font-medium text-charcoal">45-Day Handover</span>
+                <span className="text-xs sm:text-sm font-medium text-charcoal">Expert Execution</span>
               </div>
               <div className="flex flex-col sm:flex-row items-center gap-2">
                 <Sparkles className="w-4 h-4 text-primary shrink-0" />
@@ -66,8 +66,8 @@ export default function Hero() {
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-surface p-4 rounded-lg shadow-xl border border-border hidden sm:block max-w-[210px]">
-                <p className="text-xs uppercase tracking-wider text-clay font-bold mb-1">Standard Guarantee</p>
-                <p className="text-xs text-charcoal font-serif italic">100% on-time execution without hidden cost variations.</p>
+                <p className="text-xs uppercase tracking-wider text-clay font-bold mb-1">Our Commitment</p>
+                <p className="text-xs text-charcoal font-serif italic">Dedicated execution and transparent processes.</p>
               </div>
             </div>
           </div>

@@ -2,8 +2,10 @@ import React from 'react';
 
 export default function SectionHeader({
   tagline,
+  badge,
   title,
   description,
+  subtitle,
   align = 'center',
   className = '',
 }) {
@@ -13,11 +15,14 @@ export default function SectionHeader({
     right: 'text-right items-end',
   }[align] || 'text-center items-center';
 
+  const finalTagline = tagline || badge;
+  const finalDescription = description || subtitle;
+
   return (
     <div className={`flex flex-col ${alignment} max-w-2xl mx-auto mb-10 ${className}`}>
-      {tagline && (
+      {finalTagline && (
         <span className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
-          {tagline}
+          {finalTagline}
         </span>
       )}
       {title && (
@@ -25,9 +30,9 @@ export default function SectionHeader({
           {title}
         </h2>
       )}
-      {description && (
+      {finalDescription && (
         <p className="mt-3 text-sm sm:text-base text-charcoal/70 leading-relaxed">
-          {description}
+          {finalDescription}
         </p>
       )}
     </div>

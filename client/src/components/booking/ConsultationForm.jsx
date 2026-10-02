@@ -155,10 +155,12 @@ export default function ConsultationForm() {
             onChange={handleChange}
             className="w-full px-3.5 py-2.5 rounded-lg border border-border bg-cream/30 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-[#814882]/30"
           >
-            <option value="Home Interiors">Home Interiors (Residential)</option>
-            <option value="Office Interiors">Office Interiors (Commercial)</option>
+            <option value="Home Interiors">Home Interiors</option>
+            <option value="Office Interiors">Office Interiors</option>
             <option value="Paint & Textures">Paint & Textures</option>
-            <option value="Complete Overhaul">Complete Architecture & Execution</option>
+            <option value="Waterproofing">Waterproofing</option>
+            <option value="Complete Overhaul">Complete Overhaul / Architecture</option>
+            <option value="Other">Other</option>
           </select>
         </div>
       </div>

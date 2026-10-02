@@ -3,7 +3,7 @@ import { businessConfig } from '../config/business.js';
 
 export async function getAvailableSlots(dateString) {
   const targetDate = new Date(`${dateString}T00:00:00+05:30`);
-  const dayOfWeek = targetDate.getDay();
+  const dayOfWeek = new Date(`${dateString}T12:00:00Z`).getUTCDay();
 
   // Validate working day (Mon-Sat) and holiday list
   if (!businessConfig.workingDays.includes(dayOfWeek)) {

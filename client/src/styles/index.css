@@ -20,6 +20,10 @@
 
   body {
     background-color: theme('colors.cream');
+    background-image: linear-gradient(rgba(248, 248, 248, 0.9), rgba(248, 248, 248, 0.9)), url("https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2000&q=80");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
     color: theme('colors.charcoal');
     font-family: theme('fontFamily.sans');
     overflow-x: hidden;
@@ -28,12 +32,35 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: theme('fontFamily.serif');
     font-weight: 600;
-    color: theme('colors.charcoal');
+    color: inherit;
     letter-spacing: -0.01em;
   }
 }
 
 @layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-fadeIn, .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out forwards;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
   /* Subtle scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
@@ -48,5 +75,13 @@
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #814882;
+  }
+  
+  .bg-cream {
+    background-color: theme('colors.cream');
+    background-image: linear-gradient(rgba(248, 248, 248, 0.85), rgba(248, 248, 248, 0.85)), url("https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2000&q=80");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
   }
 }

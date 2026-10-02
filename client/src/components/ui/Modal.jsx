@@ -21,6 +21,7 @@ export default function Modal({
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
+      setTimeout(() => modalRef.current?.focus(), 10);
     } else {
       document.body.style.overflow = '';
     }
@@ -45,7 +46,8 @@ export default function Modal({
     >
       <div
         ref={modalRef}
-        className={`relative w-full ${maxWidth} bg-surface rounded-lg shadow-xl border border-border p-6 max-h-[90vh] overflow-y-auto`}
+        tabIndex={-1}
+        className={`relative w-full ${maxWidth} bg-surface rounded-lg shadow-xl border border-border p-6 max-h-[90vh] overflow-y-auto outline-none`}
       >
         <div className="flex items-center justify-between pb-3 mb-4 border-b border-border">
           {title ? (

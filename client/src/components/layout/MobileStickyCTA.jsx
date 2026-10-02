@@ -6,7 +6,7 @@ import { siteConfig } from '../../config/site';
 export default function MobileStickyCTA() {
   const location = useLocation();
 
-  if (location.pathname === '/book-consultation') {
+  if (location.pathname === '/book-consultation' || location.pathname === '/booking-success') {
     return null;
   }
 

@@ -9,7 +9,7 @@ export default function WhatsAppButton() {
   const location = useLocation();
 
   // Suppress button on booking workflow to eliminate distraction
-  if (location.pathname === '/book-consultation') {
+  if (location.pathname === '/book-consultation' || location.pathname === '/booking-success') {
     return null;
   }
 

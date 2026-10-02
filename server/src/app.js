@@ -7,6 +7,7 @@ import { errorHandler } from './middleware/errorHandler.js';
 import apiRoutes from './routes/index.js';
 
 const app = express();
+app.set('trust proxy', 1);
 
 app.use(helmet());
 app.use(

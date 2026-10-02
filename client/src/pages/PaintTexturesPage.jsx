@@ -116,9 +116,9 @@ export default function PaintTexturesPage() {
       {/* Surface Guarantee Banner */}
       <section className="py-12 bg-charcoal text-cream text-center">
         <div className="max-w-4xl mx-auto px-4 space-y-3">
-          <h3 className="text-2xl font-serif font-bold">Standard 3-Year Anti-Peel Warranty</h3>
+          <h3 className="text-2xl font-serif font-bold">Quality Assurance Guarantee</h3>
           <p className="text-beige/80 text-sm max-w-xl mx-auto">
-            Every paint & texture contract includes electronic wall-moisture testing prior to primer application to guarantee bonding.
+            Our team follows rigorous surface preparation and moisture testing protocols to ensure durable, long-lasting finishes.
           </p>
         </div>
       </section>
